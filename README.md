@@ -1,7 +1,7 @@
 # ShimaRinBot
 It is a very simple Discord bot I made with python. It wasn't really suppose to be used in other servers, but if you want to use it, go ahead.
 
-#NOTICE
+# NOTICE
 I've tested the commands before and were working at that time, but some commands may not work due to connection errors (like I am having now), this includes reddit commands and music commands.
 
 # Music
