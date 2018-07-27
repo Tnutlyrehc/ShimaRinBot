@@ -92,17 +92,17 @@ async def queue(ctx, url):
 
 @client.command(pass_context=True)
 async def vid(ctx):
-    choice1 = ("https://youtu.be/4KigFRmr8qM?list=LLmAOVPLaTZTkCBg5mcM0K2Q")
-    choice2 = ("https://youtu.be/8B4eQ1_kDlE?list=LLmAOVPLaTZTkCBg5mcM0K2Q")
-    choice3 = ("https://youtu.be/JadDYTwo41w?list=LLmAOVPLaTZTkCBg5mcM0K2Q")
-    choice4 = ("https://youtu.be/io7aaCUrFoY?list=LLmAOVPLaTZTkCBg5mcM0K2Q")
-    choice5 = ("https://youtu.be/Yy-hwVWAq_Q?list=LLmAOVPLaTZTkCBg5mcM0K2Q")
-    choice6 = ("https://youtu.be/ErYRZ66jS1A?list=LLmAOVPLaTZTkCBg5mcM0K2Q")
-    choice7 = ("https://youtu.be/aSx404Gotos?list=LLmAOVPLaTZTkCBg5mcM0K2Q")
-    choice8 = ("https://youtu.be/7hZrl57_C9Q?list=LLmAOVPLaTZTkCBg5mcM0K2Q")
-    choice9 = ("https://youtu.be/q5fT2nwYF-8?list=LLmAOVPLaTZTkCBg5mcM0K2Q")
-    choice10 = ("https://youtu.be/Ie_SwhgCMb8?list=LLmAOVPLaTZTkCBg5mcM0K2Q")
-    choice11 = ("https://youtu.be/aTNnQbB-bds?list=LLmAOVPLaTZTkCBg5mcM0K2Q")
+    choice1 = ("put link here")
+    choice2 = ("put link here")
+    choice3 = ("put link here")
+    choice4 = ("put link here")
+    choice5 = ("put link here")
+    choice6 = ("put link here")
+    choice7 = ("put link here)
+    choice8 = ("put link here")
+    choice9 = ("put link here")
+    choice10 = ("put link here")
+    choice11 = ("put link here")
 
     choices = [choice1, choice2, choice3, choice4, choice5, choice6, choice7, choice8, choice9, choice10, choice11]
     result = random.choice(choices)
