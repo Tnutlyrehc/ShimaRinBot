@@ -1,5 +1,5 @@
 # ShimaRinBot
-It is a very simple Discord bot I made with python. It wasn't really suppose to be used in other servers, but if you want to use it, go ahead.
+It is a very simple Discord bot I made with python. It wasn't really suppose to be used in other servers, but if you want to use it, go ahead. (Didn't update code to current)
 
 # Commands
 -  join  ~~  Joins a voice channel.
