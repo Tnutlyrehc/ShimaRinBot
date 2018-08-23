@@ -222,7 +222,7 @@ class Music:
             return
 
         voter = ctx.message.author
-        if voter == '261712809019047938':
+        if voter == '':
             await self.bot.say('A powerful force decided to force skip this song...')
             state.skip()
 
