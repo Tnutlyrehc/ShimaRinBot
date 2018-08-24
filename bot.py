@@ -12,7 +12,7 @@ client = commands.Bot("/")
 
 startup_extensions = ["Music"]
 
-API_KEYS = (os.environ['HYPIXELAPIKEYHERE'])
+API_KEYS = (str(os.environ.get('HYPIXELAPIKEYHERE')))
 hypixel.setKeys(API_KEYS)
 
 post = praw.Reddit(client_id=(os.environ['RedditID']),
@@ -186,4 +186,4 @@ if __name__ == "__main__":
 
 
 
-client.run(os.environ['BOT_TOKEN'])
+client.run(str(os.environ.get('BOT_TOKEN')))
