@@ -1,169 +1,189 @@
+import hypixel
 import discord
 from discord.ext import commands
-import async
-import youtube_dl
+from discord.voice_client import VoiceClient
 import random
-import requests as req
-import asyncio
-import time
 import praw
-import hypixel
+import youtube_dl
 
-client = commands.Bot("!")
+#Bot Setup and APIs
 
-players = {}
-queues = {}
+client = commands.Bot("/")
 
-def check_queue(id):
-    if queues[id] != []:
-        player = queues[id].pop(0)
-        players[id] = player
-        player.start()
+startup_extensions = ["Music"]
 
-#APIs
+API_KEYS = ['HYPIXELAPIKEYHERE']
+hypixel.setKeys(API_KEYS)
 
-reddit = praw.Reddit(client_id='',
-                     client_secret='',
-                     user_agent='')
+post = praw.Reddit(client_id='',
+                   client_secret='',
+                   user_agent='Shima Rin Bot v0.1 by DjDarkAssassin')
 
 @client.event
 async def on_ready():
     print("Bot online")
-    await client.change_presence(game=discord.Game(name='Camping with dj :D'))
+    await client.change_presence(game=discord.Game(name="In Dj's Tent reading manga together ;)"))
 
+class Main_Commands():
+    def __init__(self, client):
+        self.client = client
+
+
+
+#Game
 @client.command(pass_context=True)
 async def coin(ctx):
+    """Flips a coin"""
     choice = random.randint(1, 2)
     if choice == 1:
         await client.say("It landed on Tails!")
     if choice == 2:
         await client.say("It landed on Heads!")
 
-#Music
-
-@client.command(pass_context=True)
-async def join(ctx):
-    channel = ctx.message.author.voice.voice_channel
-    await client.join_voice_channel(channel)
-
-@client.command(pass_context=True)
-async def leave(ctx):
-    server = ctx.message.server
-    voice_client = client.voice_client_in(server)
-    await voice_client.disconnect()
-
-@client.command(pass_context=True)
-async def play(ctx, url):
-    server = ctx.message.server
-    voice_client = client.voice_client_in(server)
-    player = await voice_client.create_ytdl_player(url, after=lambda: check_queue(server.id))
-    await client.say("Music has been added!")
-    players[server.id] = player
-    player.start()
-
-@client.command(pass_context=True)
-async def pause(ctx):
-    id = ctx.message.server.id
-    players[id].pause()
-
-@client.command(pass_context=True)
-async def resume(ctx):
-    id = ctx.message.server.id
-    players[id].resume()
-
-@client.command(pass_context=True)
-async def stop(ctx):
-    id = ctx.message.server.id
-    players[id].stop()
-
-@client.command(pass_context=True)
-async def queue(ctx, url):
-    server = ctx.message.server
-    voice_client = client.voice_client_in(server)
-    player = await voice_client.create_ytdl_player(url, after=lambda: check_queue(server.id))
-
-    if server.id in queues:
-        queues[server.id].append(player)
-    else:
-        queues[server.id] = [player]
-    await client.say('The song has been queued!')
-
-#Random Vids
-
-@client.command(pass_context=True)
-async def vid(ctx):
-    choice1 = ("put link here")
-    choice2 = ("put link here")
-    choice3 = ("put link here")
-    choice4 = ("put link here")
-    choice5 = ("put link here")
-    choice6 = ("put link here")
-    choice7 = ("put link here)
-    choice8 = ("put link here")
-    choice9 = ("put link here")
-    choice10 = ("put link here")
-    choice11 = ("put link here")
-
-    choices = [choice1, choice2, choice3, choice4, choice5, choice6, choice7, choice8, choice9, choice10, choice11]
-    result = random.choice(choices)
-    await client.say(result)
-
-#Fortnite
-
-@client.command(pass_context=True)
-async def whereto():
-	places = ["Hero House", "Villain House", "Risky Reels", "Lucky Landing", "China Motel", "New Factories", "Motel", "anywhere you want", "Football Ground", "Between Shifty and Flush", "Container", "Jail", "North of Wailing Woods", "Anarchy Acres", "Dusty Divot", "Fatal Fields", "Flush Factory", "Greasy Grove", "Haunted Hills", "Junk Junction", "Lonely Lodge", "Loot Lake", "Moisty Mire", "Pleasant Park", "Retail Row", "Salty Springs", "Shifty Shafts", "Snobby Shores", "Tilted Towers", "Tomato Town", "Wailing Woods"]
-	plc = random.choice(places)
-	place = plc.lower()
-	if plc == "anywhere you want":
-		await client.say("Go " + place)
-	else:
-		await client.say("Go to " + place)
 
 #Responses
 
 @client.command()
 async def whatismilk():
+    """Tells you what milk really is"""
     await client.say('Cereal Sauce')
 
 @client.command(pass_context=True)
-async def ping(ctx):
+async def ping():
+    """Pong"""
     await client.say("pong")
 
 @client.command(pass_context=True)
-async def hello(ctx):
+async def hello():
+    """Hello There!"""
     await client.say("Hi There! :wave:")
 
 @client.command(pass_context=True)
-async def idiot(ctx):
+async def idiot():
+    """You're an idiot!"""
     await client.say("You're an idiot!")
 
 @client.command(pass_context=True)
-async def suwupreme(ctx):
+async def suwupreme():
+    """Lyrics from the song 'Miraie - Suwupreme(Feat. Fluff Pink)'"""
     await client.say("Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme Supreme")
 
 @client.command(pass_context=True)
-async def baka(ctx):
+async def baka():
+    """BAKA!"""
     await client.say("no u")
 
-#Reddit posts
+@client.command(pass_context=True)
+async def say(ctx,*args):
+    """Makes the bot say whatever you want [Only for selected users]"""
+    if ctx.message.author.id == 'USERID':
+        mesg = ' '.join(args)
+        await client.delete_message(ctx.message)
+        return await client.say(mesg)
+
+    elif ctx.message.author.id == 'USERID':
+        mesg = ' '.join(args)
+        await client.delete_message(ctx.message)
+        return await client.say(mesg)
+
+    elif ctx.message.author.id == 'USERID':
+        mesg = ' '.join(args)
+        await client.delete_message(ctx.message)
+        return await client.say(mesg)
 
 @client.command()
-async def cats():
-    catpics = reddit.subreddit('cats').hot()
-    pick_post = random.randint(1, 11)
-    for i in range(0, pick_post):
-        sub = next(x for x in catpics if not x.stickied)
+async def todolist():
+    """List of what I will do in the future :D"""
+    await client.say("What to do:\n1. CoinMarketCap command\n2. Fortnite stats\n3. 4chan command")
 
-    await client.say(sub.url)
+#Reddit Posts
 
 @client.command()
 async def meirl():
-    meirl = reddit.subreddit('me_irl').hot()
-    pick_post = random.randint(1, 11)
+    """Gets a post from r/meirl"""
+    meirl = post.subreddit('me_irl').hot()
+    pick_post = random.randint(1, 21)
     for i in range(0, pick_post):
         sub = next(x for x in meirl if not x.stickied)
 
     await client.say(sub.url)
-   
-client.run('')
+
+@client.command()
+async def reddit(arg):
+    """Gets a post from any subreddit"""
+    posts = post.subreddit(arg).hot()
+    pick_post = random.randint(1, 21)
+    for i in range (0, pick_post):
+        sub = next(x for x in posts if not x.stickied)
+
+    await client.say(sub.url)
+
+    #Fortnite
+
+@client.command(pass_context=True)
+async def whereto():
+    """Randomly select a place in Fortnite"""
+    places = ["Hero House", "Villain House", "Risky Reels", "Lucky Landing", "China Motel", "New Factories", "Motel", "anywhere you want", "Football Ground", "Between Shifty and Flush", "Container", "Jail", "North of Wailing Woods", "Anarchy Acres", "Dusty Divot", "Fatal Fields", "Flush Factory", "Greasy Grove", "Haunted Hills", "Junk Junction", "Lonely Lodge", "Loot Lake", "Moisty Mire", "Pleasant Park", "Retail Row", "Salty Springs", "Shifty Shafts", "Snobby Shores", "Tilted Towers", "Tomato Town", "Wailing Woods"]
+    plc = random.choice(places)
+    place = plc.lower()
+    if plc == "anywhere you want":
+        await client.say("Go " + place)
+    else:
+        await client.say("Go to " + place)
+
+#Stats
+
+@client.command()
+async def hystats(arg):
+    """Gets stats from Hypixel for a user"""
+
+    player = hypixel.Player(arg)
+    PlayerName = player.getName()
+    PlayerLevel = player.getLevel()
+    PlayerRank = player.getRank()
+
+    embed = discord.Embed(
+        title='Hypixel Stats',
+        colour= discord.Colour.red()
+        )
+
+    embed.set_thumbnail(url='https://hypixel.net/attachments/621065/')
+    embed.add_field(name='Player Name:', value=PlayerName, inline=False)
+    embed.add_field(name='Player Rank:', value=PlayerRank['rank'], inline=False)
+    embed.add_field(name='Player Level:', value=PlayerLevel, inline=False)
+    await client.say(embed=embed)
+
+#Bitcoin
+
+@client.command(pass_context=True)
+async def bitcoin():
+    """Gets the price of bitcoin from CoinDesk"""
+    url = 'https://api.coindesk.com/v1/bpi/currentprice/BTC.json'
+    async with aiohttp.ClientSession() as session:  # Async HTTP request
+        raw_response = await session.get(url)
+        response = await raw_response.text()
+        response = json.loads(response)
+        embed = discord.Embed (
+            title='CryptoCurrency',
+            colour= discord.Colour.gold()
+        )
+
+        embed.set_thumbnail(url='')
+        embed.add_field(name='Bitcoin Price:', value=('$' + response['bpi']['USD']['rate']), inline=True)
+        await client.say(embed=embed)
+
+#Music
+
+if __name__ == "__main__":
+    for extension in startup_extensions:
+        try:
+            client.load_extension(extension)
+        except Exception as e:
+            exc = '{}: {}'.format(type(e).__name__, e)
+            print('Failed to load extension {}\n{}'.format(extension, exc))
+
+
+
+
+
+client.run('YOUR TOKEN HERE')
