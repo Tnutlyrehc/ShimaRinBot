@@ -12,11 +12,11 @@ client = commands.Bot("/")
 
 startup_extensions = ["Music"]
 
-API_KEYS = ['HYPIXELAPIKEYHERE']
+API_KEYS = (os.environ['HYPIXELAPIKEYHERE'])
 hypixel.setKeys(API_KEYS)
 
-post = praw.Reddit(client_id='',
-                   client_secret='',
+post = praw.Reddit(client_id=(os.environ['RedditID']),
+                   client_secret=(os.environ['RedditSecret']),
                    user_agent='Shima Rin Bot v0.1 by DjDarkAssassin')
 
 @client.event
@@ -186,4 +186,4 @@ if __name__ == "__main__":
 
 
 
-client.run('BOT_TOKEN')
+client.run(os.environ['BOT_TOKEN'])
