@@ -12,8 +12,6 @@ client = commands.Bot("/")
 
 startup_extensions = ["Music"]
 
-HYPIXELAPIKEYHERE = (os.environ['Hypixel'])
-
 API_KEYS = ['HYPIXELAPIKEYHERE']
 hypixel.setKeys(API_KEYS)
 
@@ -188,4 +186,4 @@ if __name__ == "__main__":
 
 
 
-client.run(os.environ['BOT_TOKEN'])
+client.run('BOT_TOKEN')
