@@ -2,3 +2,5 @@ discord.py==0.16.12
 hypixel
 praw
 youtube_dl
+weather-api
+fortnite-python
