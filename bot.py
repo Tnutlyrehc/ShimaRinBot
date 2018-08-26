@@ -5,6 +5,12 @@ from discord.voice_client import VoiceClient
 import random
 import praw
 import youtube_dl
+import time
+from weather import Weather, Unit
+from fortnite_python import Fortnite
+from fortnite_python.domain import Mode
+from fortnite_python.domain import Platform
+
 
 #Bot Setup and APIs
 
@@ -12,12 +18,14 @@ client = commands.Bot("/")
 
 startup_extensions = ["Music"]
 
-API_KEYS = ['HYPIXELAPIKEYHERE']
+API_KEYS = ['425a3fe1-d3a8-4ec4-bc81-0cb927652f31']
 hypixel.setKeys(API_KEYS)
 
-post = praw.Reddit(client_id='RedditID',
-                   client_secret='RedditSecret',
+post = praw.Reddit(client_id='gHHr8Oqbns1DxQ',
+                   client_secret='bPGTnJZTFz994uIISJp6QBjMNdA',
                    user_agent='Shima Rin Bot v0.1 by DjDarkAssassin')
+
+fortnite = Fortnite('57f5e33c-c6cc-49ac-af19-eebb024f56e6')
 
 @client.event
 async def on_ready():
@@ -27,8 +35,6 @@ async def on_ready():
 class Main_Commands():
     def __init__(self, client):
         self.client = client
-
-
 
 #Game
 @client.command(pass_context=True)
@@ -49,9 +55,10 @@ async def whatismilk():
     await client.say('Cereal Sauce')
 
 @client.command(pass_context=True)
-async def ping():
+async def ping(ctx):
     """Pong"""
-    await client.say("pong")
+
+
 
 @client.command(pass_context=True)
 async def hello():
@@ -76,20 +83,23 @@ async def baka():
 @client.command(pass_context=True)
 async def say(ctx,*args):
     """Makes the bot say whatever you want [Only for selected users]"""
-    if ctx.message.author.id == 'USERID':
-        mesg = ' '.join(args)
-        await client.delete_message(ctx.message)
-        return await client.say(mesg)
+    try:
+        if ctx.message.author.id == '261712809019047938':
+            mesg = ' '.join(args)
+            await client.delete_message(ctx.message)
+            return await client.say(mesg)
 
-    elif ctx.message.author.id == 'USERID':
-        mesg = ' '.join(args)
-        await client.delete_message(ctx.message)
-        return await client.say(mesg)
+        elif ctx.message.author.id == '198850981742510081':
+            mesg = ' '.join(args)
+            await client.delete_message(ctx.message)
+            return await client.say(mesg)
 
-    elif ctx.message.author.id == 'USERID':
-        mesg = ' '.join(args)
-        await client.delete_message(ctx.message)
-        return await client.say(mesg)
+        elif ctx.message.author.id == '207727452682715136':
+            mesg = ' '.join(args)
+            await client.delete_message(ctx.message)
+            return await client.say(mesg)
+    except:
+        await client.say("You do not have permission to use this command...")
 
 @client.command()
 async def todolist():
@@ -111,12 +121,15 @@ async def meirl():
 @client.command()
 async def reddit(arg):
     """Gets a post from any subreddit"""
-    posts = post.subreddit(arg).hot()
-    pick_post = random.randint(1, 21)
-    for i in range (0, pick_post):
-        sub = next(x for x in posts if not x.stickied)
+    try:
+        posts = post.subreddit(arg).hot()
+        pick_post = random.randint(1, 21)
+        for i in range (0, pick_post):
+            sub = next(x for x in posts if not x.stickied)
 
-    await client.say(sub.url)
+        await client.say(sub.url)
+    except:
+        await client.say("This subreddit does not exist...")
 
     #Fortnite
 
@@ -136,22 +149,52 @@ async def whereto():
 @client.command()
 async def hystats(arg):
     """Gets stats from Hypixel for a user"""
+    try:
+        player = hypixel.Player(arg)
+        PlayerName = player.getName()
+        PlayerLevel = player.getLevel()
+        PlayerRank = player.getRank()
 
-    player = hypixel.Player(arg)
-    PlayerName = player.getName()
-    PlayerLevel = player.getLevel()
-    PlayerRank = player.getRank()
+        embed = discord.Embed(
+            title='Hypixel Stats',
+            colour= discord.Colour.red()
+            )
 
-    embed = discord.Embed(
-        title='Hypixel Stats',
-        colour= discord.Colour.red()
+        embed.set_thumbnail(url='https://hypixel.net/attachments/621065/')
+        embed.add_field(name='Player Name:', value=PlayerName, inline=False)
+        embed.add_field(name='Player Rank:', value=PlayerRank['rank'], inline=False)
+        embed.add_field(name='Player Level:', value=PlayerLevel, inline=False)
+        await client.say(embed=embed)
+    except:
+        await client.say("The user you put in doesn't have data/does not exist...")
+
+
+
+@client.command()
+async def FNstats(arg):
+    """Gets stats from Fortnite for a user"""
+    try:
+        player = fortnite.player(arg)
+        statsQ = player.getStats(Mode.SQUAD)
+        statsD = player.getStats(Mode.DUO)
+        statsS = player.getStats(Mode.SOLO)
+
+        embed = discord.Embed(
+            title='Fortnite Stats',
+            colour=discord.Colour.dark_purple()
         )
 
-    embed.set_thumbnail(url='https://hypixel.net/attachments/621065/')
-    embed.add_field(name='Player Name:', value=PlayerName, inline=False)
-    embed.add_field(name='Player Rank:', value=PlayerRank['rank'], inline=False)
-    embed.add_field(name='Player Level:', value=PlayerLevel, inline=False)
-    await client.say(embed=embed)
+        embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/409895347687522307/483009396616462356/FortniteClient-Win64-Shipping_123.png')
+        embed.add_field(name='Name:', value=arg, inline=False)
+        embed.add_field(name='Squad Wins:', value=statsQ.wins, inline=True)
+        embed.add_field(name='Squad Kills:', value=statsQ.kills, inline=True)
+        embed.add_field(name='Duo Wins:', value=statsD.wins, inline=True)
+        embed.add_field(name='Duo KIlls:', value=statsD.kills, inline=True)
+        embed.add_field(name='Solo Wins:', value=statsS.wins, inline=True)
+        embed.add_field(name='Solo KIlls:', value=statsS.kills, inline=True)
+        await client.say(embed=embed)
+    except:
+        await client.say("Oh no! We couldn't get stats for this user, or the user you put in doesn't exist...")
 
 #Bitcoin
 
@@ -182,8 +225,35 @@ if __name__ == "__main__":
             exc = '{}: {}'.format(type(e).__name__, e)
             print('Failed to load extension {}\n{}'.format(extension, exc))
 
+#weather
+@client.command()
+async def weather(arg):
+    """Gets the weather for a location"""
+    try:
+        weather = Weather(unit=Unit.FAHRENHEIT)
+        location = weather.lookup_by_location(arg)
+        condition = location.condition
+        date = condition.date
+        text = condition.text
+        temp = condition.temp
+
+        C = (float(temp) - 32) * 5 / 9
+
+        embed = discord.Embed(
+            title='Weather',
+            colour=discord.Colour.dark_blue()
+        )
+
+        embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/412949621069840384/482633254227279882/d06.png')
+        embed.add_field(name='Location:', value=arg, inline=False)
+        embed.add_field(name='Date:', value=date, inline=False)
+        embed.add_field(name='Weather:', value=text, inline=False)
+        embed.add_field(name='Temp(F):', value=temp + ' F', inline=False)
+        embed.add_field(name='Temp(C):', value=str(round(C)) + ' C', inline=False)
+        await client.say(embed=embed)
+    except:
+        await client.say("The location you put in didn't have data, sorry!")
 
 
 
-
-client.run('BOT_TOKEN')
+client.run('NDU2NjgzNTE5NzI5NzI5NTQ3.DkAVkg._pr2PD6gNCRnG7U13xy6ARKtALk')
