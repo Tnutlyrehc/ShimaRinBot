@@ -18,14 +18,14 @@ client = commands.Bot("/")
 
 startup_extensions = ["Music"]
 
-API_KEYS = ['425a3fe1-d3a8-4ec4-bc81-0cb927652f31']
+API_KEYS = ['HYPIXELAPI']
 hypixel.setKeys(API_KEYS)
 
-post = praw.Reddit(client_id='gHHr8Oqbns1DxQ',
-                   client_secret='bPGTnJZTFz994uIISJp6QBjMNdA',
+post = praw.Reddit(client_id='REDDITID',
+                   client_secret='REDDITSECRET',
                    user_agent='Shima Rin Bot v0.1 by DjDarkAssassin')
 
-fortnite = Fortnite('57f5e33c-c6cc-49ac-af19-eebb024f56e6')
+fortnite = Fortnite('FORTNITEKEY')
 
 @client.event
 async def on_ready():
@@ -84,17 +84,17 @@ async def baka():
 async def say(ctx,*args):
     """Makes the bot say whatever you want [Only for selected users]"""
     try:
-        if ctx.message.author.id == '261712809019047938':
+        if ctx.message.author.id == 'USER1':
             mesg = ' '.join(args)
             await client.delete_message(ctx.message)
             return await client.say(mesg)
 
-        elif ctx.message.author.id == '198850981742510081':
+        elif ctx.message.author.id == 'USER2':
             mesg = ' '.join(args)
             await client.delete_message(ctx.message)
             return await client.say(mesg)
 
-        elif ctx.message.author.id == '207727452682715136':
+        elif ctx.message.author.id == 'USER3':
             mesg = ' '.join(args)
             await client.delete_message(ctx.message)
             return await client.say(mesg)
@@ -256,4 +256,4 @@ async def weather(arg):
 
 
 
-client.run('NDU2NjgzNTE5NzI5NzI5NTQ3.DkAVkg._pr2PD6gNCRnG7U13xy6ARKtALk')
+client.run('DISCORD')
