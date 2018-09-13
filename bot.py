@@ -11,6 +11,8 @@ from fortnite_python import Fortnite
 from fortnite_python.domain import Mode
 from fortnite_python.domain import Platform
 import os
+import aiohttp
+import json
 
 
 #Bot Setup and APIs
