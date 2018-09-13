@@ -23,11 +23,16 @@ HYPIXELAPI = os.environ.get('HYPIXEL_KEY')
 API_KEYS = [HYPIXELAPI]
 hypixel.setKeys(API_KEYS)
 
-post = praw.Reddit(client_id='REDDITID',
-                   client_secret='REDDITSECRET',
+REDDITID = os.environ.get('REDDIT_ID')
+REDDITSECRET = os.environ.get('REDDIT_SECRET')
+
+post = praw.Reddit(client_id=REDDITID,
+                   client_secret=REDDITSECRET,
                    user_agent='Shima Rin Bot v0.1 by DjDarkAssassin')
 
-fortnite = Fortnite('FORTNITEKEY')
+FORTNITEKEY = os.environ.get('FORTNITE_KEY')
+
+fortnite = Fortnite(FORTNITEKEY)
 
 @client.event
 async def on_ready():
