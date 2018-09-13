@@ -10,6 +10,7 @@ from weather import Weather, Unit
 from fortnite_python import Fortnite
 from fortnite_python.domain import Mode
 from fortnite_python.domain import Platform
+import os
 
 
 #Bot Setup and APIs
@@ -18,7 +19,8 @@ client = commands.Bot("/")
 
 startup_extensions = ["Music"]
 
-API_KEYS = ['HYPIXELAPI']
+HYPIXELAPI = os.environ.get('HYPIXEL_KEY')
+API_KEYS = [HYPIXELAPI]
 hypixel.setKeys(API_KEYS)
 
 post = praw.Reddit(client_id='REDDITID',
@@ -255,5 +257,5 @@ async def weather(arg):
         await client.say("The location you put in didn't have data, sorry!")
 
 
-
-client.run('DISCORD')
+DISCORD = os.environ.get('DISCORD_KEY')
+client.run(DISCORD)
