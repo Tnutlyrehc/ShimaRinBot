@@ -202,6 +202,59 @@ async def FNstats(arg):
         await client.say(embed=embed)
     except:
         await client.say("Oh no! We couldn't get stats for this user, or the user you put in doesn't exist...")
+        
+@client.command()
+async def FNstatsPSN(arg):
+    """Gets stats from Fortnite for a user"""
+    try:
+        player = fortnite.player(arg, Platform.PSN)
+        statsQ = player.getStats(Mode.SQUAD)
+        statsD = player.getStats(Mode.DUO)
+        statsS = player.getStats(Mode.SOLO)
+
+        embed = discord.Embed(
+            title='Fortnite Stats',
+            colour=discord.Colour.dark_purple()
+        )
+
+        embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/409895347687522307/483009396616462356/FortniteClient-Win64-Shipping_123.png')
+        embed.add_field(name='Name:', value=arg, inline=False)
+        embed.add_field(name='Squad Wins:', value=statsQ.wins, inline=True)
+        embed.add_field(name='Squad Kills:', value=statsQ.kills, inline=True)
+        embed.add_field(name='Duo Wins:', value=statsD.wins, inline=True)
+        embed.add_field(name='Duo KIlls:', value=statsD.kills, inline=True)
+        embed.add_field(name='Solo Wins:', value=statsS.wins, inline=True)
+        embed.add_field(name='Solo KIlls:', value=statsS.kills, inline=True)
+        await client.say(embed=embed)
+    except:
+        await client.say("Oh no! We couldn't get stats for this user, or the user you put in doesn't exist...")
+
+@client.command()
+async def FNstatsXBOX(arg):
+    """Gets stats from Fortnite for a user"""
+    try:
+        player = fortnite.player(arg, Platform.XBOX)
+        statsQ = player.getStats(Mode.SQUAD)
+        statsD = player.getStats(Mode.DUO)
+        statsS = player.getStats(Mode.SOLO)
+
+        embed = discord.Embed(
+            title='Fortnite Stats',
+            colour=discord.Colour.dark_purple()
+        )
+
+        embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/409895347687522307/483009396616462356/FortniteClient-Win64-Shipping_123.png')
+        embed.add_field(name='Name:', value=arg, inline=False)
+        embed.add_field(name='Squad Wins:', value=statsQ.wins, inline=True)
+        embed.add_field(name='Squad Kills:', value=statsQ.kills, inline=True)
+        embed.add_field(name='Duo Wins:', value=statsD.wins, inline=True)
+        embed.add_field(name='Duo KIlls:', value=statsD.kills, inline=True)
+        embed.add_field(name='Solo Wins:', value=statsS.wins, inline=True)
+        embed.add_field(name='Solo KIlls:', value=statsS.kills, inline=True)
+        await client.say(embed=embed)
+    except:
+        await client.say("Oh no! We couldn't get stats for this user, or the user you put in doesn't exist...")
+
 
 #Bitcoin
 
