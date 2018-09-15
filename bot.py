@@ -13,7 +13,6 @@ from fortnite_python.domain import Platform
 import os
 import aiohttp
 import json
-import asyncio
 
 #Bot Setup and APIs
 
