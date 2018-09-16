@@ -16,6 +16,34 @@ import json
 
 #Bot Setup and APIs
 
+client = commands.Bot("/")
+
+startup_extensions = ["Music"]
+
+HYPIXELAPI = os.environ.get('HYPIXEL_KEY')
+API_KEYS = [HYPIXELAPI]
+hypixel.setKeys(API_KEYS)
+
+REDDITID = os.environ.get('REDDIT_ID')
+REDDITSECRET = os.environ.get('REDDIT_SECRET')
+
+post = praw.Reddit(client_id=REDDITID,
+                   client_secret=REDDITSECRET,
+                   user_agent='Shima Rin Bot v0.1 by DjDarkAssassin')
+
+FORTNITEKEY = os.environ.get('FORTNITE_KEY')
+
+fortnite = Fortnite(FORTNITEKEY)
+
+@client.event
+async def on_ready():
+    print("Bot online")
+    await client.change_presence(game=discord.Game(name="In Dj's Tent reading manga together ;)"))
+
+class Main_Commands():
+    def __init__(self, client):
+        self.client = client
+
 #Game
 @client.command(pass_context=True)
 async def coin(ctx):
