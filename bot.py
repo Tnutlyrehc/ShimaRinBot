@@ -95,7 +95,7 @@ async def baka():
 async def say(ctx,*args):
     """Makes the bot say whatever you want [Only for selected users]"""
     try:
-        if ctx.message.author.id == (float(USER1)):
+        if ctx.message.author.id == USER1:
             mesg = ' '.join(args)
             await client.delete_message(ctx.message)
             return await client.say(mesg)
