@@ -35,6 +35,9 @@ FORTNITEKEY = os.environ.get('FORTNITE_KEY')
 
 fortnite = Fortnite(FORTNITEKEY)
 
+USER1 = os.environ.get('USER_1')
+
+
 @client.event
 async def on_ready():
     print("Bot online")
@@ -92,17 +95,7 @@ async def baka():
 async def say(ctx,*args):
     """Makes the bot say whatever you want [Only for selected users]"""
     try:
-        if ctx.message.author.id == 'USER1':
-            mesg = ' '.join(args)
-            await client.delete_message(ctx.message)
-            return await client.say(mesg)
-
-        elif ctx.message.author.id == 'USER2':
-            mesg = ' '.join(args)
-            await client.delete_message(ctx.message)
-            return await client.say(mesg)
-
-        elif ctx.message.author.id == 'USER3':
+        if ctx.message.author.id == USER1:
             mesg = ' '.join(args)
             await client.delete_message(ctx.message)
             return await client.say(mesg)
