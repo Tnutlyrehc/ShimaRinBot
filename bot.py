@@ -13,6 +13,7 @@ from fortnite_python.domain import Platform
 import os
 import aiohttp
 import json
+import time
 
 #Bot Setup and APIs
 
@@ -68,6 +69,10 @@ async def whatismilk():
 @client.command(pass_context=True)
 async def ping(ctx):
     """Pong"""
+    before = time.monotonic()
+    message = await ctx.send(":ping_pong: » Pong?")
+    ping = (time.monotonic() - before) * 1000
+    await message.edit(content=f":ping_pong: » Pong!\nWS: `{round(self.bot.latency * 1000)}ms`\nMessage: `{int(ping)}ms`")
 
 
 
