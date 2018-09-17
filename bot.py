@@ -97,6 +97,10 @@ async def baka():
     await client.say("no u")
 
 @client.command(pass_context=True)
+async def school():
+  await client.say("ur mom gay")
+
+@client.command(pass_context=True)
 async def say(ctx,*args):
     """Makes the bot say whatever you want [Only for selected users]"""
     try:
