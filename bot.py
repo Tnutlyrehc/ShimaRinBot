@@ -280,7 +280,6 @@ async def bitcoin():
         await client.say(embed=embed)
 
 #Music
-
 if __name__ == "__main__":
     for extension in startup_extensions:
         try:
@@ -318,18 +317,7 @@ async def weather(arg):
     except:
         await client.say("The location you put in didn't have data, sorry!")
         
-        
-#moderation
-@client.command(pass_context=True)
-@commmands.has_role("Friends")
-async def minecraft(ctx):
-  try:
-      member = ctx.message.author
-      role = get(member.server.roles, name="Minecraft Players")
-      await client.add_roles(member, role)
-      await client.say("Role added!")
-  except:
-      await client.say("You already have the role/There was an error, sorry!")
+
 
 
 DISCORD = os.environ.get('DISCORD_KEY')
