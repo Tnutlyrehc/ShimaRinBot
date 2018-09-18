@@ -321,6 +321,7 @@ async def weather(arg):
         
 #moderation
 @client.command(pass_context=True)
+@commmands.has_role("Friends")
 async def minecraft(ctx):
   try:
       member = ctx.message.author
