@@ -2,6 +2,7 @@ import hypixel
 import discord
 from discord.ext import commands
 from discord.voice_client import VoiceClient
+from discord.utils import get
 import random
 import praw
 import youtube_dl
@@ -316,6 +317,13 @@ async def weather(arg):
         await client.say(embed=embed)
     except:
         await client.say("The location you put in didn't have data, sorry!")
+        
+        
+#moderation
+@client.command()
+async def minecraft(member):
+  role = discord.utils.get(member.server.roles, name="Minecraft Players")
+  await client.add_roles(member, role)
 
 
 DISCORD = os.environ.get('DISCORD_KEY')
