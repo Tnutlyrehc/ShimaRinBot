@@ -320,10 +320,15 @@ async def weather(arg):
         
         
 #moderation
-@client.command()
-async def minecraft(member):
-  role = discord.utils.get(member.server.roles, name="Minecraft Players")
-  await client.add_roles(member, role)
+@client.command(pass_context=True)
+async def minecraft(ctx):
+  try:
+      member = ctx.message.author
+      role = get(member.server.roles, name="Minecraft Players")
+      await client.add_roles(member, role)
+      await client.say("Role added!")
+  except:
+      await client.say("You already have the role/There was an error, sorry!")
 
 
 DISCORD = os.environ.get('DISCORD_KEY')
