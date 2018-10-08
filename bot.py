@@ -317,7 +317,12 @@ async def weather(arg):
     except:
         await client.say("The location you put in didn't have data, sorry!")
         
-
+        
+#Links
+@client.command()
+async def github():
+  """Gives link to Github"""
+  await client.say("https://github.com/DjDarkAssassin/ShimaRinBot")
 
 
 DISCORD = os.environ.get('DISCORD_KEY')
